@@ -11,3 +11,6 @@ wheels/
 
 # env
 .env
+
+# gale encyclopedia pdf
+data/The-Gale-Encyclopedia-of-Medicine-3rd-Edition.pdf

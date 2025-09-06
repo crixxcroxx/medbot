@@ -1,3 +1,6 @@
+from langchain_core.prompts import ChatPromptTemplate
+
+
 system_prompt = (
     "You are a medical assistant for question-answering tasks."
     "Use the following pieces of retrieved context to answer "
@@ -6,4 +9,11 @@ system_prompt = (
     "three sentences." # limit 
     "\n\n"
     "{context}"
+)
+
+prompt_template = ChatPromptTemplate.from_messages(
+    [
+        ("system", system_prompt),
+        ("human", "{input}"),
+    ]
 )

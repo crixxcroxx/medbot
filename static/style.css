@@ -21,6 +21,9 @@ body{
   background: #555; 
 }
 
+.btn.disabled {
+	border: none;
+}
 
 .wrapper{
    
@@ -73,6 +76,9 @@ body{
 .msg.me {
     background-color: #fff !important;
 }
+p.msg {
+	padding: 5px 10px;
+}
 .between{
 	font-size: 8px;
 	font-weight: 500;
@@ -85,11 +91,13 @@ body{
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 }
+form {
+	width: 100%;
+}
 .form-control{
+	flex-grow: 1;
 	font-size: 14px;
 	font-weight: 400;
-	width: 230px;
-	height: 30px;
 	border: none;
 
 }
@@ -117,7 +125,6 @@ body{
     cursor: pointer;
 
 }
-
 
 .icondiv{
     gap: 13px;

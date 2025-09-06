@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -52,3 +55,19 @@ def download_embedding() -> HuggingFaceEmbeddings:
     )
 
     return embeddings
+
+
+def load_env_vars() -> tuple[str, str]:
+    load_dotenv()
+
+    PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+
+    os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
+    os.environ["GROQ_API_KEY"] = GROQ_API_KEY
+
+    if "GROQ_API_KEY" not in os.environ or "PINECONE_API_KEY" not in os.environ:
+        print("Please set the GROQ_API_KEY & PINECONE_API_KEY environment variable.")
+        exit()
+
+    return PINECONE_API_KEY, GROQ_API_KEY

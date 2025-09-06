@@ -14,44 +14,97 @@
             <div class="main">
                 <div class="px-2 scroll">
                     
-                <div class="d-flex align-items-center chat-card">
-                    <div class="text-left pr-1"><img src="https://i.imgur.com/HpF4BFG.jpg" width="30" class="img1" /></div>
-                    <div class="pr-2 pl-1">
-                        <span class="name">MedBot</span>
-                        <p class="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit tempora veritatis sit voluptates rem sunt neque placeat. Nam tenetur temporibus minima, nostrum consequatur illum adipisci.</p>
-                    </div>
-                </div>
-
-                <div class="d-flex align-items-center text-right justify-content-end chat-card">
-                        <div class="pr-2">
-                            <span class="name me">Me</span>
-                            <p class="msg me">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, ad!</p>
+                    <div class="d-flex align-items-center chat-card">
+                        <div class="text-left pr-1"><img src="https://i.imgur.com/HpF4BFG.jpg" width="30" class="img1" /></div>
+                        <div class="pr-2 pl-1">
+                            <span class="name">MedBot</span>
+                            <p class="msg">Hi there! I am you medical chat assistant. Ask me your health/medicine related questions.</p>
                         </div>
-                        <!-- <div><img src="https://img.icons8.com/color/40/000000/guest-male.png" width="30" class="img1" /></div> -->
-                        <i class="fa fa-user-circle" aria-hidden="true" style="font-size: 30px; color: #512DA8;"></i>
-                </div>
-
-                <!-- <div class="text-center"><span class="between">Call started at 10:47am</span></div>
-                <div class="text-center"><span class="between">Call ended at 11:03am</span></div> -->
-
-                </div>
-
-
-            
-                <nav class="navbar bg-white navbar-expand-sm d-flex justify-content-between">
-                    <input type="text number" name="text" class="form-control" placeholder="Type a message...">
-
-                    <div class="icondiv d-flex justify-content-end align-content-center text-center ml-2">
-                        <i class="fa fa-paperclip icon1"></i>
-                        <i class="fa fa-paper-plane-o icon2"></i>
                     </div>
-                    
-                    
+
+                    <!-- <div class="text-center"><span class="between">Call started at 10:47am</span></div>
+                    <div class="text-center"><span class="between">Call ended at 11:03am</span></div> -->
+
+                </div>
+
+                <nav class="navbar bg-white navbar-expand-sm">
+                    <form class="d-flex justify-content-between" action="/get">
+                        <input type="text number" name="msg" class="form-control" placeholder="Type a message..." required>
+
+                        <div class="d-flex justify-content-end align-content-center text-center ml-2">
+                            <button type="submit" class="btn disabled">
+                                <span>
+                                    <i class="fa fa-paperclip icon1"></i>
+                                </span>
+                            </button>
+                            
+                            <button type="submit" class="btn">
+                                <span>
+                                    <i class="fa fa-paper-plane-o icon2"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
                 </nav>
                 
             </div>
 
-            </div>
+        </div>
+
+        <script>
+            msg_bubble_me = (msg_user) => `
+                <div class="d-flex align-items-center text-right justify-content-end chat-card">
+                    <div class="pr-2">
+                        <span class="name me">Me</span>
+                        <p class="msg me">${msg_user}</p>
+                    </div>
+                    <i class="fa fa-user-circle" aria-hidden="true" style="font-size: 30px; color: #512DA8;"></i>
+                </div>`
+                
+            msg_bubble_bot = (msg_bot) => `
+                <div class="d-flex align-items-center chat-card">
+                    <div class="text-left pr-1"><img src="https://i.imgur.com/HpF4BFG.jpg" width="30" class="img1" /></div>
+                    <div class="pr-2 pl-1">
+                        <span class="name">MedBot</span>
+                        <p class="msg">${msg_bot}</p>
+                    </div>
+                </div>`
+
+            async function handle_request(formData) {
+                try {
+                    const res = await fetch('/get', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await res.json();
+                    
+                    // response
+                    chat_container.insertAdjacentHTML('beforeend', msg_bubble_bot(data.message));
+                    chat_container.scrollTop = chat_container.scrollHeight;
+                    
+                } catch (error) {
+                    chat_container.insertAdjacentHTML('beforeend', msg_bubble_bot(error.message));
+                    chat_container.scrollTop = chat_container.scrollHeight;
+                }
+            }
+
+            form = document.querySelector("form")
+            input = document.querySelector("input")
+            chat_container = document.querySelector(".scroll")
+            form.addEventListener("submit", e => {
+                event.preventDefault();
+                const formData = new FormData(form);
+
+                // user input
+                chat_container.insertAdjacentHTML('beforeend', msg_bubble_me(input.value));
+                input.value = "";
+                chat_container.scrollTop = chat_container.scrollHeight;
+
+                // request
+                handle_request(formData)
+            })
+        </script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
         <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script> -->

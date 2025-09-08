@@ -6,6 +6,8 @@ COPY . /app
 
 RUN pip install uv
 
-RUN uv pip install .
+RUN uv venv
+
+RUN . .venv/bin/activate && uv pip install .
 
 CMD ["python3", "app.py"]

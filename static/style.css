@@ -47,7 +47,12 @@ body{
 .scroll{
 	overflow-y: scroll;
 	scroll-behavior: smooth;
-	    height: 325px;
+	height: 325px;
+}
+@media (max-width: 576px) { 
+	.scroll {
+		height: 80vh;
+	}
 }
 .img1{
 	border-radius: 50%;

@@ -6,6 +6,6 @@ COPY . /app
 
 RUN pip install uv
 
-RUN uv pip install
+RUN uv pip install .
 
 CMD ["python3", "app.py"]
